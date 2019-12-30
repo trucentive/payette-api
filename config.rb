@@ -20,6 +20,12 @@ set :js_dir, 'javascripts'
 set :images_dir, 'images'
 set :fonts_dir, 'fonts'
 
+# Global Variables
+set :api_endpoint, 'https://trucentive.com/api/v1'
+config[:api_endpoint]
+set :account_url, 'https://trucentive.com/account'
+config[:account_url]
+
 # Activate the syntax highlighter
 activate :syntax
 ready do

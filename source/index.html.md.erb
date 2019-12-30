@@ -1,0 +1,309 @@
+---
+title: TruCentive API Reference
+
+language_tabs: # must be one of https://git.io/vQNgJ
+  - shell
+  - ruby
+
+toc_footers:
+  - <a href='https://trucentive.com'>Main TruCentive Site</a>
+  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+
+includes:
+  - errors
+
+search: true
+---
+
+# Introduction
+
+Welcome to the TruCentive API! You can use our API to access TruCentive API endpoints.
+
+We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+
+# Authentication
+
+There are two forms of authorization available. An API key or <a href="https://oauth.net/">OAuth</a>. For using the API directly we recommend the API Key. We also provide <a href="https://zaiper.com">Zapier</a> integration which works via OAuth and can enable integration of the API without any coding.
+
+> Example authorization using an API key:
+
+```shell
+curl <%= config[:api_endpoint] %>?api_key=API_KEY
+```
+
+> Make sure to replace `API_KEY` with your API key.
+
+You can access your API key on your account page on the [Trucentive Website](config[:account_url]).
+
+TruCentive expects for the API key to be included in all API requests to the server either as a query parameter:
+
+`<%= config[:api_endpoint] %>?api_key=API_KEY`
+
+or in an 'Authorization' header like this:
+
+`Authorization: API_KEY`
+
+<aside class="notice">
+You must replace <code>API_KEY</code> with your personal API key.
+</aside>
+
+
+# Account
+
+## Get Account Information
+
+```shell
+curl <%= config[:api_endpoint] %>/me?api_key=API_KEY
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": "user-e6a53849-fb46-4abd-9f43-c88c58705a9d",
+  "uuid": "user-e6a53849-fb46-4abd-9f43-c88c58705a9d",
+  "email": "john.smith@test.com",
+  "name": "John Smith",
+}
+```
+
+This endpoint retrieves information about the currently authenticated account.
+
+### HTTP Request
+
+`GET <%= config[:api_endpoint] %>/project/instruments`
+
+### Query Parameters
+
+None
+
+
+# Projects
+
+## Get Projects
+
+`GET <%= config[:api_endpoint] %>/projects`
+
+```shell
+curl <%= config[:api_endpoint] %>/projects?api_key=API_KEY
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+  "id": "project-e6a53849-fb46-4abd-9f43-c88c58705a9d",
+  "uuid": "project-e6a53849-fb46-4abd-9f43-c88c58705a9d",
+  "name": "Test Project",
+  "description": "This is a test project",
+  "account_uuid": "account-36d7d9e9-1ff9-4fd4-ad6f-991f0526f52c",
+  "starts_at": "2019-11-31T19:21:21.322Z",
+  "expires_at": null,
+  "created_at": "2019-11-25T21:44:54.911Z",
+  "min_instrument_value": 5.0,
+  "max_instrument_value": 30.25,
+  "test_mode": false
+ }
+]
+```
+
+This API endpoint returns a list of projects that the currently authenticated account has access to. 
+
+### Query Parameters
+
+None
+
+## Get Project Instruments
+
+`GET <%= config[:api_endpoint] %>/project/instruments?project_uuid=UUID`
+
+```shell
+curl <%= config[:api_endpoint] %>/project/instruments?project_uuid=UUID&api_key=API_KEY
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+  "id": "inst-d3c774ac-3f48-4dfc-bf76-af79d2e3433e",
+  "uuid": "inst-d3c774ac-3f48-4dfc-bf76-af79d2e3433e",
+  "name": "Target Gift Card",
+  "description": "Target Gift Card in any value"
+ }
+]
+```
+
+This API endpoint returns a list of available 'instruments' for project. Instruments are the types of
+gift cards that can be sent to users for this project (an Amazon gift card would be an
+instrument).
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+project_uuid | true | The UUID of the project to retrieve available instruments for
+
+# Envelopes
+
+## Send An Envelope
+
+`POST <%= config[:api_endpoint] %>/envelope/deliver`
+
+```shell
+curl <%= config[:api_endpoint] %>/project/instruments?api_key=API_KEY
+  -d project_uuid=project-e6a53849-fb46-4abd-9f43-c88c58705a9d \
+  -d amount=5.00 \
+  -d address=john.smith@test.com \
+  -d instrument_uuid=inst-d3c774ac-3f48-4dfc-bf76-af79d2e3433e \
+  -d first_name=John \
+  -d last_name=Smith
+```
+
+> The above command returns JSON structured like this with information about the envelope delivered.
+
+```json
+  {
+    "id":"CDVLBYYIOPHLJVWYEF",
+    "uuid":"CDVLBYYIOPHLJVWYEF",
+    "addresses": [
+      {
+        "uuid":"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f",
+        "format":"mailto",
+        "delivery_address":"john.smith@test.com"
+      },
+    ],
+    "project": {
+      "uuid":"project-e6a53849-fb46-4abd-9f43-c88c58705a9d",
+      "name":"Test Project"
+    },
+    "state":"approved",
+    "delivered_at": null,
+    "opened_at": null,
+    "viewed_at": null,
+    "expires_at":"2019-12-09T23:59:59.999Z",
+    "test_mode":false
+  }
+```
+
+### Possible errors
+
+Outside of the standard API error messages in the <a href="#errors">errors section</a> below there are several error messages that can be returned in the 'error' field of the json error message with the status code 400.
+
+> If an error occurs it will be returned like this:
+
+```json
+{
+  "error": "Exceeeds available funds",
+  "status": 400
+}
+```
+
+* Invalid value - If the card is requested for a value that is not valid for that instrument.
+* No cards available for that amount - If a card is requested for a value and is not available in that value.
+* Exceeds available funds - If the allocated funds for this project or card are exceeded.
+* Invalid delivery address - If the delivery email or SMS addres is not valid.
+
+### Query Parameters
+
+Parameter       | Default | Description
+----------------| ------- | -----------
+project_uuid    | true    | UUID of the project
+amount          | true    | Amount in dollars and cents to gift, ex: 5.50
+address         | true    | The email address or phone number to send to
+instrument_uuid | true    | The instrument (type of gift card) to send
+first_name      | false   | The first name of the person the envelope is being sent to
+last_name       | false   | The last name of the person the envelope is being sent to
+
+## Get Viewed Envelopes
+
+`GET <%= config[:api_endpoint] %>/envelopes/viewed`
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id":"CDVLBYYIOPHLJVWYEF",
+    "uuid":"CDVLBYYIOPHLJVWYEF",
+    "addresses": [
+      {
+        "uuid":"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f",
+        "format":"mailto",
+        "delivery_address":"john.smith@test.com"
+      },
+      {
+        "uuid":"addr-2e947b94-c676-4696-b184-01994a38b07f",
+        "format":"sms",
+        "delivery_address":"261-123-1231"
+      }
+    ],
+    "project": {
+      "uuid":"project-2690d664-5199-4fe0-a37c-6f3cc339d882",
+      "name":"Test Project"
+    },
+    "state":"approved",
+    "delivered_at":"2019-12-09T23:59:59.999Z",
+    "opened_at":null,
+    "viewed_at":"2019-12-09T23:59:59.999Z",
+    "expires_at":"2019-12-09T23:59:59.999Z",
+    "test_mode":false
+  }
+]
+```
+
+This API endpoint returns a list of envelopes viewed in the last hour (by default, but can be configured using a 
+query parameter) for projects that the currently authorized account has accss to.
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+since     | false   | The number of seconds to look back, see API description above. 
+
+## Get Opened Envelopes
+
+`GET <%= config[:api_endpoint] %>/envelopes/opened`
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id":"CDVLBYYIOPHLJVWYEF",
+    "uuid":"CDVLBYYIOPHLJVWYEF",
+    "addresses": [
+      {
+        "uuid":"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f",
+        "format":"mailto",
+        "delivery_address":"john.smith@test.com"
+      },
+      {
+        "uuid":"addr-2e947b94-c676-4696-b184-01994a38b07f",
+        "format":"sms",
+        "delivery_address":"261-123-1231"
+      }
+    ],
+    "project": {
+      "uuid":"project-2690d664-5199-4fe0-a37c-6f3cc339d882",
+      "name":"Test Project"
+    },
+    "state":"approved",
+    "delivered_at":"2019-12-09T23:59:59.999Z",
+    "opened_at":null,
+    "viewed_at":"2019-12-09T23:59:59.999Z",
+    "expires_at":"2019-12-09T23:59:59.999Z",
+    "test_mode":false
+  }
+]
+```
+
+This API endpoint returns a list of envelopes viewed in the last hour for projects that the
+currently authorized account has accss to.
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+since     | false   | The number of seconds to look back, see API description above. 
