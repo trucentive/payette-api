@@ -38,7 +38,7 @@ If you'd prefer to use Docker, instructions are available [in the wiki](https://
 
 ### Editing documentation
 
-The documentation source is contained in 
+The documentation source is contained in the source/ directory and the root is the index.md.erb file. Documentation on [editing Slate markdown](https://github.com/slatedocs/slate/wiki/Markdown-Syntax).
 
 ### Publishing documentation
 
