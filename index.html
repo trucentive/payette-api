@@ -1,0 +1,631 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>TruCentive API Reference</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen-bbd353b5.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print-bccf8c07.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all-c5541673.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar-cad8cdcb.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo-1f2c8c4f.png" class="logo" alt="Logo" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="ruby">ruby</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <ul id="toc" class="toc-list-h1">
+          <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+          </li>
+          <li>
+            <a href="#account" class="toc-h1 toc-link" data-title="Account">Account</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-account-information" class="toc-h2 toc-link" data-title="Get Account Information">Get Account Information</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#projects" class="toc-h1 toc-link" data-title="Projects">Projects</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-projects" class="toc-h2 toc-link" data-title="Get Projects">Get Projects</a>
+                  </li>
+                  <li>
+                    <a href="#get-project-instruments" class="toc-h2 toc-link" data-title="Get Project Instruments">Get Project Instruments</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#envelopes" class="toc-h1 toc-link" data-title="Envelopes">Envelopes</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#send-an-envelope" class="toc-h2 toc-link" data-title="Send An Envelope">Send An Envelope</a>
+                  </li>
+                  <li>
+                    <a href="#get-viewed-envelopes" class="toc-h2 toc-link" data-title="Get Viewed Envelopes">Get Viewed Envelopes</a>
+                  </li>
+                  <li>
+                    <a href="#get-opened-envelopes" class="toc-h2 toc-link" data-title="Get Opened Envelopes">Get Opened Envelopes</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+          </li>
+      </ul>
+        <ul class="toc-footer">
+            <li><a href='https://trucentive.com'>Main TruCentive Site</a></li>
+            <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p>Welcome to the TruCentive API! You can use our API to access TruCentive API endpoints.</p>
+
+<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<h1 id='authentication'>Authentication</h1>
+<p>There are two forms of authorization available. An API key or <a href="https://oauth.net/">OAuth</a>. For using the API directly we recommend the API Key. We also provide <a href="https://zaiper.com">Zapier</a> integration which works via OAuth and can enable integration of the API without any coding.</p>
+
+<blockquote>
+<p>Example authorization using an API key:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1?api_key<span class="o">=</span>API_KEY
+</code></pre>
+<blockquote>
+<p>Make sure to replace <code>API_KEY</code> with your API key.</p>
+</blockquote>
+
+<p>You can access your API key on your account page on the <a href="config[:account_url]">Trucentive Website</a>.</p>
+
+<p>TruCentive expects for the API key to be included in all API requests to the server either as a query parameter:</p>
+
+<p><code>https://trucentive.com/api/v1?api_key=API_KEY</code></p>
+
+<p>or in an &#39;Authorization&#39; header like this:</p>
+
+<p><code>Authorization: API_KEY</code></p>
+
+<aside class="notice">
+You must replace <code>API_KEY</code> with your personal API key.
+</aside>
+<h1 id='account'>Account</h1><h2 id='get-account-information'>Get Account Information</h2><pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1/me?api_key<span class="o">=</span>API_KEY
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user-e6a53849-fb46-4abd-9f43-c88c58705a9d"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user-e6a53849-fb46-4abd-9f43-c88c58705a9d"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john.smith@test.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves information about the currently authenticated account.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET https://trucentive.com/api/v1/project/instruments</code></p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<p>None</p>
+<h1 id='projects'>Projects</h1><h2 id='get-projects'>Get Projects</h2>
+<p><code>GET https://trucentive.com/api/v1/projects</code></p>
+<pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1/projects?api_key<span class="o">=</span>API_KEY
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"project-e6a53849-fb46-4abd-9f43-c88c58705a9d"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"project-e6a53849-fb46-4abd-9f43-c88c58705a9d"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Project"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is a test project"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"account-36d7d9e9-1ff9-4fd4-ad6f-991f0526f52c"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"starts_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-31T19:21:21.322Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-25T21:44:54.911Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"min_instrument_value"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"max_instrument_value"</span><span class="p">:</span><span class="w"> </span><span class="mf">30.25</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This API endpoint returns a list of projects that the currently authenticated account has access to. </p>
+<h3 id='query-parameters-2'>Query Parameters</h3>
+<p>None</p>
+<h2 id='get-project-instruments'>Get Project Instruments</h2>
+<p><code>GET https://trucentive.com/api/v1/project/instruments?project_uuid=UUID</code></p>
+<pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1/project/instruments?project_uuid<span class="o">=</span>UUID&amp;api_key<span class="o">=</span>API_KEY
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inst-d3c774ac-3f48-4dfc-bf76-af79d2e3433e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inst-d3c774ac-3f48-4dfc-bf76-af79d2e3433e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Target Gift Card"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Target Gift Card in any value"</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This API endpoint returns a list of available &#39;instruments&#39; for project. Instruments are the types of
+gift cards that can be sent to users for this project (an Amazon gift card would be an
+instrument).</p>
+<h3 id='query-parameters-3'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>project_uuid</td>
+<td>true</td>
+<td>The UUID of the project to retrieve available instruments for</td>
+</tr>
+</tbody></table>
+<h1 id='envelopes'>Envelopes</h1><h2 id='send-an-envelope'>Send An Envelope</h2>
+<p><code>POST https://trucentive.com/api/v1/envelope/deliver</code></p>
+<pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1/project/instruments?api_key<span class="o">=</span>API_KEY
+  -d <span class="nv">project_uuid</span><span class="o">=</span>project-e6a53849-fb46-4abd-9f43-c88c58705a9d <span class="se">\</span>
+  -d <span class="nv">amount</span><span class="o">=</span>5.00 <span class="se">\</span>
+  -d <span class="nv">address</span><span class="o">=</span>john.smith@test.com <span class="se">\</span>
+  -d <span class="nv">instrument_uuid</span><span class="o">=</span>inst-d3c774ac-3f48-4dfc-bf76-af79d2e3433e <span class="se">\</span>
+  -d <span class="nv">first_name</span><span class="o">=</span>John <span class="se">\</span>
+  -d <span class="nv">last_name</span><span class="o">=</span>Smith
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this with information about the envelope delivered.</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"format"</span><span class="p">:</span><span class="s2">"mailto"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="s2">"john.smith@test.com"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"project-e6a53849-fb46-4abd-9f43-c88c58705a9d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Test Project"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"state"</span><span class="p">:</span><span class="s2">"approved"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"delivered_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"opened_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"viewed_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='possible-errors'>Possible errors</h3>
+<p>Outside of the standard API error messages in the <a href="#errors">errors section</a> below there are several error messages that can be returned in the &#39;error&#39; field of the json error message with the status code 400.</p>
+
+<blockquote>
+<p>If an error occurs it will be returned like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Exceeeds available funds"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<ul>
+<li>Invalid value - If the card is requested for a value that is not valid for that instrument.</li>
+<li>No cards available for that amount - If a card is requested for a value and is not available in that value.</li>
+<li>Exceeds available funds - If the allocated funds for this project or card are exceeded.</li>
+<li>Invalid delivery address - If the delivery email or SMS addres is not valid.</li>
+</ul>
+<h3 id='query-parameters-4'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>project_uuid</td>
+<td>true</td>
+<td>UUID of the project</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>true</td>
+<td>Amount in dollars and cents to gift, ex: 5.50</td>
+</tr>
+<tr>
+<td>address</td>
+<td>true</td>
+<td>The email address or phone number to send to</td>
+</tr>
+<tr>
+<td>instrument_uuid</td>
+<td>true</td>
+<td>The instrument (type of gift card) to send</td>
+</tr>
+<tr>
+<td>first_name</td>
+<td>false</td>
+<td>The first name of the person the envelope is being sent to</td>
+</tr>
+<tr>
+<td>last_name</td>
+<td>false</td>
+<td>The last name of the person the envelope is being sent to</td>
+</tr>
+</tbody></table>
+<h2 id='get-viewed-envelopes'>Get Viewed Envelopes</h2>
+<p><code>GET https://trucentive.com/api/v1/envelopes/viewed</code></p>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"format"</span><span class="p">:</span><span class="s2">"mailto"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="s2">"john.smith@test.com"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"addr-2e947b94-c676-4696-b184-01994a38b07f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"format"</span><span class="p">:</span><span class="s2">"sms"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="s2">"261-123-1231"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"project-2690d664-5199-4fe0-a37c-6f3cc339d882"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Test Project"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"state"</span><span class="p">:</span><span class="s2">"approved"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"delivered_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"opened_at"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"viewed_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This API endpoint returns a list of envelopes viewed in the last hour (by default, but can be configured using a 
+query parameter) for projects that the currently authorized account has accss to.</p>
+<h3 id='query-parameters-5'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>since</td>
+<td>false</td>
+<td>The number of seconds to look back, see API description above.</td>
+</tr>
+</tbody></table>
+<h2 id='get-opened-envelopes'>Get Opened Envelopes</h2>
+<p><code>GET https://trucentive.com/api/v1/envelopes/opened</code></p>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"format"</span><span class="p">:</span><span class="s2">"mailto"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="s2">"john.smith@test.com"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"addr-2e947b94-c676-4696-b184-01994a38b07f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"format"</span><span class="p">:</span><span class="s2">"sms"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="s2">"261-123-1231"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"project-2690d664-5199-4fe0-a37c-6f3cc339d882"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Test Project"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"state"</span><span class="p">:</span><span class="s2">"approved"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"delivered_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"opened_at"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"viewed_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This API endpoint returns a list of envelopes viewed in the last hour for projects that the
+currently authorized account has accss to.</p>
+<h3 id='query-parameters-6'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>since</td>
+<td>false</td>
+<td>The number of seconds to look back, see API description above.</td>
+</tr>
+</tbody></table>
+<h1 id='errors'>Errors</h1>
+<aside class="notice">
+Listed below are the errors that are common across all APIs. Where invididual APIs can return different errors they will
+be listed out separately in those sections.
+</aside>
+
+<blockquote>
+<p>All errors will have the following JSON attached containing more detail about the error message.</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"More detail about the error"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>The TruCentive API uses the following error codes:</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request -- Your request is invalid, please see the json error.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Access Denied -- Your API key is wrong or your OAuth account is not authorized.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found -- The specified API or resource could not be found.</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable -- You requested a format that isn&#39;t valid.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests -- You&#39;ve submitted too many API requests in too short a time, try again later.</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error -- We had a problem processing your request, please try again later or contact support.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="ruby">ruby</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
