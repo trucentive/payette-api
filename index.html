@@ -201,7 +201,7 @@
       <script src="javascripts/all-c5541673.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,7 +212,6 @@
       <img src="images/logo-1f2c8c4f.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -272,8 +271,6 @@
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
 <p>Welcome to the TruCentive API! You can use our API to access TruCentive API endpoints.</p>
-
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 <h1 id='authentication'>Authentication</h1>
 <p>There are two forms of authorization available. An API key or <a href="https://oauth.net/">OAuth</a>. For using the API directly we recommend the API Key. We also provide <a href="https://zaiper.com">Zapier</a> integration which works via OAuth and can enable integration of the API without any coding.</p>
 
@@ -286,7 +283,7 @@
 <p>Make sure to replace <code>API_KEY</code> with your API key.</p>
 </blockquote>
 
-<p>You can access your API key on your account page on the <a href="config[:account_url]">Trucentive Website</a>.</p>
+<p>You can access your API key on your &#39;My Settings&#39; page on the <a href="config[:account_url]">Trucentive Website</a>.</p>
 
 <p>TruCentive expects for the API key to be included in all API requests to the server either as a query parameter:</p>
 
@@ -313,7 +310,7 @@ You must replace <code>API_KEY</code> with your personal API key.
 </span></code></pre>
 <p>This endpoint retrieves information about the currently authenticated account.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>GET https://trucentive.com/api/v1/project/instruments</code></p>
+<p><code>GET https://trucentive.com/api/v1/me</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <p>None</p>
 <h1 id='projects'>Projects</h1><h2 id='get-projects'>Get Projects</h2>
@@ -623,7 +620,6 @@ be listed out separately in those sections.
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
           </div>
       </div>
     </div>
