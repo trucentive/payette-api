@@ -3,7 +3,7 @@ Payette API Documentation
 
 This repository contains doducmentation for the Payette API. The documentation is based on the [Slate API documention system](https://github.com/slatedocs/slate) which creates API documentaiton from specially formatted Markdown.
 
-Deployed version on our test server: https://minty-fresh.herokuapp.com/api/v1/docs/
+Deployed to github pages: https://trucentive.github.io/payette-api/#introduction
 
 Getting Started
 ------------------------------
@@ -42,20 +42,17 @@ The documentation source is contained in the source/ directory and the root is t
 
 ### Publishing documentation
 
-Build the documentation with
+There is a deploy.sh script in the repository that will push the documentation to github in a gh-pages branch for github pages:
+
+```shell
+./deploy.sh
+```
+
+If you need to build the documentation separately you can do it with this command:
 
 ```shell
 bundle exec middleman build --clean
 ```
-
-Then copy the documentation to the Payette repository and commit them
-
-```shell
-cp build/* PAYETTE_APP_DIR/public/api/v1/docs
-cd PAYETTE_APP_DIR
-git commit
-```
-
 
 ### Note on JavaScript Runtime
 

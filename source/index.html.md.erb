@@ -3,7 +3,6 @@ title: TruCentive API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
 
 toc_footers:
   - <a href='https://trucentive.com'>Main TruCentive Site</a>
@@ -19,8 +18,6 @@ search: true
 
 Welcome to the TruCentive API! You can use our API to access TruCentive API endpoints.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
 # Authentication
 
 There are two forms of authorization available. An API key or <a href="https://oauth.net/">OAuth</a>. For using the API directly we recommend the API Key. We also provide <a href="https://zaiper.com">Zapier</a> integration which works via OAuth and can enable integration of the API without any coding.
@@ -33,7 +30,7 @@ curl <%= config[:api_endpoint] %>?api_key=API_KEY
 
 > Make sure to replace `API_KEY` with your API key.
 
-You can access your API key on your account page on the [Trucentive Website](config[:account_url]).
+You can access your API key on your 'My Settings' page on the [Trucentive Website](config[:account_url]).
 
 TruCentive expects for the API key to be included in all API requests to the server either as a query parameter:
 
@@ -71,7 +68,7 @@ This endpoint retrieves information about the currently authenticated account.
 
 ### HTTP Request
 
-`GET <%= config[:api_endpoint] %>/project/instruments`
+`GET <%= config[:api_endpoint] %>/me`
 
 ### Query Parameters
 

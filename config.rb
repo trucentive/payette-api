@@ -23,7 +23,7 @@ set :fonts_dir, 'fonts'
 # Global Variables
 set :api_endpoint, 'https://trucentive.com/api/v1'
 config[:api_endpoint]
-set :account_url, 'https://trucentive.com/account'
+set :account_url, 'https://trucentive.com/user_settings'
 config[:account_url]
 
 # Activate the syntax highlighter
