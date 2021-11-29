@@ -20,26 +20,27 @@ Welcome to the TruCentive API! You can use our API to access TruCentive API endp
 
 # Authentication
 
-There are two forms of authorization available. An API key or <a href="https://oauth.net/">OAuth</a>. For using the API directly we recommend the API Key. We also provide <a href="https://zaiper.com">Zapier</a> integration which works via OAuth and can enable integration of the API without any coding.
+There are two forms of authorization available. An API key or <a href="https://oauth.net/">OAuth</a>. For using the API directly we recommend the API Key. We also provide <a href="https://zapier.com">Zapier</a> integration which works via OAuth and can enable integration of the API without any coding.
 
 > Example authorization using an API key:
 
 ```shell
-curl <%= config[:api_endpoint] %>?api_key=API_KEY
+curl --header "Authorization: API_KEY" <%= config[:api_endpoint] %>
 ```
 
 > Make sure to replace `API_KEY` with your API key.
 
 You can access your API key on your 'My Settings' page on the [Trucentive Website](config[:account_url]).
 
-TruCentive expects for the API key to be included in all API requests to the server either as a query parameter:
-
-`<%= config[:api_endpoint] %>?api_key=API_KEY`
-
-or in an 'Authorization' header like this:
+TruCentive expects for the API key to be included in all API requests to the server in an 'Authorization' header like this:
 
 `Authorization: API_KEY`
 
+Alternatively, you can provide the API key as a URL parameter (we recommend using the Authorization Header method as it is more secure):
+
+`<%= config[:api_endpoint] %>?api_key=API_KEY`
+
+or
 <aside class="notice">
 You must replace <code>API_KEY</code> with your personal API key.
 </aside>
@@ -105,7 +106,7 @@ curl <%= config[:api_endpoint] %>/projects?api_key=API_KEY
 ]
 ```
 
-This API endpoint returns a list of projects that the currently authenticated account has access to. 
+This API endpoint returns a list of projects that the currently authenticated account has access to.
 
 ### Query Parameters
 
@@ -192,7 +193,7 @@ Outside of the standard API error messages in the <a href="#errors">errors secti
 
 ```json
 {
-  "error": "Exceeeds available funds",
+  "error": "Exceeds available funds",
   "status": 400
 }
 ```
@@ -250,14 +251,14 @@ last_name       | false   | The last name of the person the envelope is being se
 ]
 ```
 
-This API endpoint returns a list of envelopes viewed in the last hour (by default, but can be configured using a 
+This API endpoint returns a list of envelopes viewed in the last hour (by default, but can be configured using a
 query parameter) for projects that the currently authorized account has accss to.
 
 ### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-since     | false   | The number of seconds to look back, see API description above. 
+since     | false   | The number of seconds to look back, see API description above.
 
 ## Get Opened Envelopes
 
@@ -303,4 +304,4 @@ currently authorized account has accss to.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-since     | false   | The number of seconds to look back, see API description above. 
+since     | false   | The number of seconds to look back, see API description above.
