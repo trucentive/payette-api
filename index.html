@@ -205,11 +205,11 @@
     <a href="#" id="nav-button">
       <span>
         NAV
-        <img src="images/navbar-cad8cdcb.png" alt="Navbar" />
+        <img src="images/navbar-cad8cdcb.png" alt="" />
       </span>
     </a>
     <div class="toc-wrapper">
-      <img src="images/logo-1f2c8c4f.png" class="logo" alt="Logo" />
+      <img src="images/logo-1f2c8c4f.png" class="logo" alt="" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
         </div>
@@ -272,12 +272,12 @@
         <h1 id='introduction'>Introduction</h1>
 <p>Welcome to the TruCentive API! You can use our API to access TruCentive API endpoints.</p>
 <h1 id='authentication'>Authentication</h1>
-<p>There are two forms of authorization available. An API key or <a href="https://oauth.net/">OAuth</a>. For using the API directly we recommend the API Key. We also provide <a href="https://zaiper.com">Zapier</a> integration which works via OAuth and can enable integration of the API without any coding.</p>
+<p>There are two forms of authorization available. An API key or <a href="https://oauth.net/">OAuth</a>. For using the API directly we recommend the API Key. We also provide <a href="https://zapier.com">Zapier</a> integration which works via OAuth and can enable integration of the API without any coding.</p>
 
 <blockquote>
 <p>Example authorization using an API key:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1?api_key<span class="o">=</span>API_KEY
+<pre class="highlight shell tab-shell"><code>curl --header <span class="s2">"Authorization: API_KEY"</span> https://trucentive.com/api/v1
 </code></pre>
 <blockquote>
 <p>Make sure to replace <code>API_KEY</code> with your API key.</p>
@@ -285,17 +285,18 @@
 
 <p>You can access your API key on your &#39;My Settings&#39; page on the <a href="config[:account_url]">Trucentive Website</a>.</p>
 
-<p>TruCentive expects for the API key to be included in all API requests to the server either as a query parameter:</p>
-
-<p><code>https://trucentive.com/api/v1?api_key=API_KEY</code></p>
-
-<p>or in an &#39;Authorization&#39; header like this:</p>
+<p>TruCentive expects for the API key to be included in all API requests to the server in an &#39;Authorization&#39; header like this:</p>
 
 <p><code>Authorization: API_KEY</code></p>
 
+<p>Alternatively, you can provide the API key as a URL parameter (we recommend using the Authorization Header method as it is more secure):</p>
+
+<p><code>https://trucentive.com/api/v1?api_key=API_KEY</code></p>
+
+<p>or
 <aside class="notice">
 You must replace <code>API_KEY</code> with your personal API key.
-</aside>
+</aside></p>
 <h1 id='account'>Account</h1><h2 id='get-account-information'>Get Account Information</h2><pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1/me?api_key<span class="o">=</span>API_KEY
 </code></pre>
 <blockquote>
@@ -336,7 +337,7 @@ You must replace <code>API_KEY</code> with your personal API key.
  </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>This API endpoint returns a list of projects that the currently authenticated account has access to. </p>
+<p>This API endpoint returns a list of projects that the currently authenticated account has access to.</p>
 <h3 id='query-parameters-2'>Query Parameters</h3>
 <p>None</p>
 <h2 id='get-project-instruments'>Get Project Instruments</h2>
@@ -413,7 +414,7 @@ instrument).</p>
 <p>If an error occurs it will be returned like this:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Exceeeds available funds"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Exceeds available funds"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -497,7 +498,7 @@ instrument).</p>
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>This API endpoint returns a list of envelopes viewed in the last hour (by default, but can be configured using a 
+<p>This API endpoint returns a list of envelopes viewed in the last hour (by default, but can be configured using a
 query parameter) for projects that the currently authorized account has accss to.</p>
 <h3 id='query-parameters-5'>Query Parameters</h3>
 <table><thead>
