@@ -20,7 +20,7 @@ GEM
     contracts (0.13.0)
     dotenv (2.7.6)
     erubis (2.7.0)
-    execjs (2.8.1)
+    execjs (2.7.0)
     fast_blank (1.0.0)
     fastimage (2.2.4)
     ffi (1.15.3)
@@ -128,6 +128,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  execjs (= 2.7.0)
   middleman
   middleman-autoprefixer
   middleman-sprockets
@@ -141,4 +142,4 @@ RUBY VERSION
    ruby 3.0.2p107
 
 BUNDLED WITH
-   2.2.22
+   2.2.28

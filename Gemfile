@@ -10,3 +10,5 @@ gem 'rouge'
 gem 'redcarpet'
 gem 'nokogiri'
 gem 'sass'
+# Locked at this version due to this: https://github.com/rails/execjs/issues/99
+gem 'execjs', '2.7.0'
