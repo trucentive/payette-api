@@ -283,7 +283,7 @@
 <p>Make sure to replace <code>API_KEY</code> with your API key.</p>
 </blockquote>
 
-<p>You can access your API key on your &#39;My Settings&#39; page on the <a href="config[:account_url]">Trucentive Website</a>.</p>
+<p>You can create an API key on your &#39;Account&#39; -&gt; &#39;API Access&#39;  page on the <a href="config[:account_url]">Trucentive Website</a>.</p>
 
 <p>TruCentive expects for the API key to be included in all API requests to the server in an &#39;Authorization&#39; header like this:</p>
 
@@ -293,10 +293,9 @@
 
 <p><code>https://trucentive.com/api/v1?api_key=API_KEY</code></p>
 
-<p>or
 <aside class="notice">
 You must replace <code>API_KEY</code> with your personal API key.
-</aside></p>
+</aside>
 <h1 id='account'>Account</h1><h2 id='get-account-information'>Get Account Information</h2><pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1/me?api_key<span class="o">=</span>API_KEY
 </code></pre>
 <blockquote>
@@ -333,7 +332,8 @@ You must replace <code>API_KEY</code> with your personal API key.
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-25T21:44:54.911Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"min_instrument_value"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"max_instrument_value"</span><span class="p">:</span><span class="w"> </span><span class="mf">30.25</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"custom_fields"</span><span class="p">:[</span><span class="s2">"custom_color"</span><span class="p">]</span><span class="w">
  </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
@@ -357,7 +357,7 @@ You must replace <code>API_KEY</code> with your personal API key.
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This API endpoint returns a list of available &#39;instruments&#39; for project. Instruments are the types of
-gift cards that can be sent to users for this project (an Amazon gift card would be an
+incentives that can be sent to users for this project (an Amazon gift card, or a physical product would be an
 instrument).</p>
 <h3 id='query-parameters-3'>Query Parameters</h3>
 <table><thead>
@@ -384,28 +384,33 @@ instrument).</p>
   -d <span class="nv">last_name</span><span class="o">=</span>Smith
 </code></pre>
 <blockquote>
-<p>The above command returns JSON structured like this with information about the envelope delivered.</p>
+<p>The above command returns JSON structured like this with information about the envelope queued for delivery.</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="s2">"Envelope queued for delivery"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"envelope"</span><span class="p">:</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"format"</span><span class="p">:</span><span class="s2">"mailto"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="s2">"john.smith@test.com"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"project-e6a53849-fb46-4abd-9f43-c88c58705a9d"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Test Project"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"state"</span><span class="p">:</span><span class="s2">"approved"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"delivered_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"opened_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"viewed_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="kc">false</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"format"</span><span class="p">:</span><span class="s2">"mailto"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="s2">"john.smith@test.com"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"project-e6a53849-fb46-4abd-9f43-c88c58705a9d"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Test Project"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"state"</span><span class="p">:</span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"delivered_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"opened_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"viewed_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"custom_fields"</span><span class="p">:{</span><span class="s2">"custom_color"</span><span class="p">:</span><span class="s2">"periwinkle"</span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span></code></pre><h3 id='possible-errors'>Possible errors</h3>
 <p>Outside of the standard API error messages in the <a href="#errors">errors section</a> below there are several error messages that can be returned in the &#39;error&#39; field of the json error message with the status code 400.</p>
@@ -463,6 +468,13 @@ instrument).</p>
 <td>The last name of the person the envelope is being sent to</td>
 </tr>
 </tbody></table>
+<h3 id='custom-fields'>Custom Fields</h3>
+<p>Custom Fields may be included in the envelope delivery request. The custom fields must be defined beforehand in your account. Format the data like this:</p>
+
+<p><code>custom_fields: {
+  &quot;custom_color&quot;: &quot;periwinkle&quot;,
+  &quot;custom_size&quot;: &quot;large&quot;
+}</code></p>
 <h2 id='get-viewed-envelopes'>Get Viewed Envelopes</h2>
 <p><code>GET https://trucentive.com/api/v1/envelopes/viewed</code></p>
 
