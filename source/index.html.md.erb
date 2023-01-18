@@ -30,7 +30,7 @@ curl --header "Authorization: API_KEY" <%= config[:api_endpoint] %>
 
 > Make sure to replace `API_KEY` with your API key.
 
-You can access your API key on your 'My Settings' page on the [Trucentive Website](config[:account_url]).
+You can create an API key on your 'Account' -> 'API Access'  page on the [Trucentive Website](config[:account_url]).
 
 TruCentive expects for the API key to be included in all API requests to the server in an 'Authorization' header like this:
 
@@ -40,7 +40,7 @@ Alternatively, you can provide the API key as a URL parameter (we recommend usin
 
 `<%= config[:api_endpoint] %>?api_key=API_KEY`
 
-or
+
 <aside class="notice">
 You must replace <code>API_KEY</code> with your personal API key.
 </aside>
@@ -101,7 +101,8 @@ curl <%= config[:api_endpoint] %>/projects?api_key=API_KEY
   "created_at": "2019-11-25T21:44:54.911Z",
   "min_instrument_value": 5.0,
   "max_instrument_value": 30.25,
-  "test_mode": false
+  "test_mode": false,
+  "custom_fields":["custom_color"]
  }
 ]
 ```
@@ -134,7 +135,7 @@ curl <%= config[:api_endpoint] %>/project/instruments?project_uuid=UUID&api_key=
 ```
 
 This API endpoint returns a list of available 'instruments' for project. Instruments are the types of
-gift cards that can be sent to users for this project (an Amazon gift card would be an
+incentives that can be sent to users for this project (an Amazon gift card, or a physical product would be an
 instrument).
 
 ### Query Parameters
@@ -159,29 +160,34 @@ curl <%= config[:api_endpoint] %>/project/instruments?api_key=API_KEY
   -d last_name=Smith
 ```
 
-> The above command returns JSON structured like this with information about the envelope delivered.
+> The above command returns JSON structured like this with information about the envelope queued for delivery.
 
 ```json
   {
-    "id":"CDVLBYYIOPHLJVWYEF",
-    "uuid":"CDVLBYYIOPHLJVWYEF",
-    "addresses": [
+    "message":"Envelope queued for delivery",
+    "envelope":
       {
-        "uuid":"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f",
-        "format":"mailto",
-        "delivery_address":"john.smith@test.com"
-      },
-    ],
-    "project": {
-      "uuid":"project-e6a53849-fb46-4abd-9f43-c88c58705a9d",
-      "name":"Test Project"
-    },
-    "state":"approved",
-    "delivered_at": null,
-    "opened_at": null,
-    "viewed_at": null,
-    "expires_at":"2019-12-09T23:59:59.999Z",
-    "test_mode":false
+        "id":"CDVLBYYIOPHLJVWYEF",
+        "uuid":"CDVLBYYIOPHLJVWYEF",
+        "addresses": [
+          {
+            "uuid":"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f",
+            "format":"mailto",
+            "delivery_address":"john.smith@test.com"
+          },
+        ],
+        "project": {
+          "uuid":"project-e6a53849-fb46-4abd-9f43-c88c58705a9d",
+          "name":"Test Project"
+        },
+        "state":"delivered",
+        "delivered_at": null,
+        "opened_at": null,
+        "viewed_at": null,
+        "expires_at":"2019-12-09T23:59:59.999Z",
+        "test_mode":false,
+        "custom_fields":{"custom_color":"periwinkle"}
+      }
   }
 ```
 
@@ -198,6 +204,7 @@ Outside of the standard API error messages in the <a href="#errors">errors secti
 }
 ```
 
+
 * Invalid value - If the card is requested for a value that is not valid for that instrument.
 * No cards available for that amount - If a card is requested for a value and is not available in that value.
 * Exceeds available funds - If the allocated funds for this project or card are exceeded.
@@ -213,6 +220,14 @@ address         | true    | The email address or phone number to send to
 instrument_uuid | true    | The instrument (type of gift card) to send
 first_name      | false   | The first name of the person the envelope is being sent to
 last_name       | false   | The last name of the person the envelope is being sent to
+
+### Custom Fields
+Custom Fields may be included in the envelope delivery request. The custom fields must be defined beforehand in your account. Format the data like this:
+
+`custom_fields: {
+  "custom_color": "periwinkle",
+  "custom_size": "large"
+}`
 
 ## Get Viewed Envelopes
 
