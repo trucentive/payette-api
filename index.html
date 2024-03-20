@@ -277,7 +277,7 @@
 <blockquote>
 <p>Example authorization using an API key:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl --header <span class="s2">"Authorization: API_KEY"</span> https://trucentive.com/api/v1
+<pre class="highlight shell tab-shell"><code>curl --header <span class="s2">"Authorization: API_KEY"</span> https://app.trucentive.com/api/v1
 </code></pre>
 <blockquote>
 <p>Make sure to replace <code>API_KEY</code> with your API key.</p>
@@ -291,12 +291,12 @@
 
 <p>Alternatively, you can provide the API key as a URL parameter (we recommend using the Authorization Header method as it is more secure):</p>
 
-<p><code>https://trucentive.com/api/v1?api_key=API_KEY</code></p>
+<p><code>https://app.trucentive.com/api/v1?api_key=API_KEY</code></p>
 
 <aside class="notice">
 You must replace <code>API_KEY</code> with your personal API key.
 </aside>
-<h1 id='account'>Account</h1><h2 id='get-account-information'>Get Account Information</h2><pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1/me?api_key<span class="o">=</span>API_KEY
+<h1 id='account'>Account</h1><h2 id='get-account-information'>Get Account Information</h2><pre class="highlight shell tab-shell"><code>curl https://app.trucentive.com/api/v1/me?api_key<span class="o">=</span>API_KEY
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
@@ -310,12 +310,12 @@ You must replace <code>API_KEY</code> with your personal API key.
 </span></code></pre>
 <p>This endpoint retrieves information about the currently authenticated account.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>GET https://trucentive.com/api/v1/me</code></p>
+<p><code>GET https://app.trucentive.com/api/v1/me</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <p>None</p>
 <h1 id='projects'>Projects</h1><h2 id='get-projects'>Get Projects</h2>
-<p><code>GET https://trucentive.com/api/v1/projects</code></p>
-<pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1/projects?api_key<span class="o">=</span>API_KEY
+<p><code>GET https://app.trucentive.com/api/v1/projects</code></p>
+<pre class="highlight shell tab-shell"><code>curl https://app.trucentive.com/api/v1/projects?api_key<span class="o">=</span>API_KEY
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
@@ -341,8 +341,8 @@ You must replace <code>API_KEY</code> with your personal API key.
 <h3 id='query-parameters-2'>Query Parameters</h3>
 <p>None</p>
 <h2 id='get-project-instruments'>Get Project Instruments</h2>
-<p><code>GET https://trucentive.com/api/v1/project/instruments?project_uuid=UUID</code></p>
-<pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1/project/instruments?project_uuid<span class="o">=</span>UUID&amp;api_key<span class="o">=</span>API_KEY
+<p><code>GET https://app.trucentive.com/api/v1/project/instruments?project_uuid=UUID</code></p>
+<pre class="highlight shell tab-shell"><code>curl https://app.trucentive.com/api/v1/project/instruments?project_uuid<span class="o">=</span>UUID&amp;api_key<span class="o">=</span>API_KEY
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
@@ -374,14 +374,15 @@ instrument).</p>
 </tr>
 </tbody></table>
 <h1 id='envelopes'>Envelopes</h1><h2 id='send-an-envelope'>Send An Envelope</h2>
-<p><code>POST https://trucentive.com/api/v1/envelope/deliver</code></p>
-<pre class="highlight shell tab-shell"><code>curl https://trucentive.com/api/v1/project/instruments?api_key<span class="o">=</span>API_KEY
+<p><code>POST https://app.trucentive.com/api/v1/envelope/deliver</code></p>
+<pre class="highlight shell tab-shell"><code>curl -X POST https://app.trucentive.com/api/v1/project/instruments?api_key<span class="o">=</span>API_KEY
   -d <span class="nv">project_uuid</span><span class="o">=</span>project-e6a53849-fb46-4abd-9f43-c88c58705a9d <span class="se">\</span>
   -d <span class="nv">amount</span><span class="o">=</span>5.00 <span class="se">\</span>
   -d <span class="nv">address</span><span class="o">=</span>john.smith@test.com <span class="se">\</span>
   -d <span class="nv">instrument_uuid</span><span class="o">=</span>inst-d3c774ac-3f48-4dfc-bf76-af79d2e3433e <span class="se">\</span>
   -d <span class="nv">first_name</span><span class="o">=</span>John <span class="se">\</span>
-  -d <span class="nv">last_name</span><span class="o">=</span>Smith
+  -d <span class="nv">last_name</span><span class="o">=</span>Smith <span class="se">\</span>
+  -d <span class="s2">"custom_fields[custom_color]=periwinkle"</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this with information about the envelope queued for delivery.</p>
@@ -445,7 +446,7 @@ instrument).</p>
 <tr>
 <td>amount</td>
 <td>true</td>
-<td>Amount in dollars and cents to gift, ex: 5.50</td>
+<td>Amount in dollars and cents to gift, ex: 5.50. If the project has a fixed value this parameter will be ignored.</td>
 </tr>
 <tr>
 <td>address</td>
@@ -455,7 +456,7 @@ instrument).</p>
 <tr>
 <td>instrument_uuid</td>
 <td>true</td>
-<td>The instrument (type of gift card) to send</td>
+<td>The instrument (type of reward) to send</td>
 </tr>
 <tr>
 <td>first_name</td>
@@ -476,7 +477,7 @@ instrument).</p>
   &quot;custom_size&quot;: &quot;large&quot;
 }</code></p>
 <h2 id='get-viewed-envelopes'>Get Viewed Envelopes</h2>
-<p><code>GET https://trucentive.com/api/v1/envelopes/viewed</code></p>
+<p><code>GET https://app.trucentive.com/api/v1/envelopes/viewed</code></p>
 
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
@@ -527,7 +528,7 @@ query parameter) for projects that the currently authorized account has accss to
 </tr>
 </tbody></table>
 <h2 id='get-opened-envelopes'>Get Opened Envelopes</h2>
-<p><code>GET https://trucentive.com/api/v1/envelopes/opened</code></p>
+<p><code>GET https://app.trucentive.com/api/v1/envelopes/opened</code></p>
 
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
