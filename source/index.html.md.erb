@@ -151,13 +151,14 @@ project_uuid | true | The UUID of the project to retrieve available instruments 
 `POST <%= config[:api_endpoint] %>/envelope/deliver`
 
 ```shell
-curl <%= config[:api_endpoint] %>/project/instruments?api_key=API_KEY
+curl -X POST <%= config[:api_endpoint] %>/project/instruments?api_key=API_KEY
   -d project_uuid=project-e6a53849-fb46-4abd-9f43-c88c58705a9d \
   -d amount=5.00 \
   -d address=john.smith@test.com \
   -d instrument_uuid=inst-d3c774ac-3f48-4dfc-bf76-af79d2e3433e \
   -d first_name=John \
-  -d last_name=Smith
+  -d last_name=Smith \
+  -d "custom_fields[custom_color]=periwinkle"
 ```
 
 > The above command returns JSON structured like this with information about the envelope queued for delivery.
@@ -215,9 +216,9 @@ Outside of the standard API error messages in the <a href="#errors">errors secti
 Parameter       | Default | Description
 ----------------| ------- | -----------
 project_uuid    | true    | UUID of the project
-amount          | true    | Amount in dollars and cents to gift, ex: 5.50
+amount          | true    | Amount in dollars and cents to gift, ex: 5.50. If the project has a fixed value this parameter will be ignored.
 address         | true    | The email address or phone number to send to
-instrument_uuid | true    | The instrument (type of gift card) to send
+instrument_uuid | true    | The instrument (type of reward) to send
 first_name      | false   | The first name of the person the envelope is being sent to
 last_name       | false   | The last name of the person the envelope is being sent to
 
