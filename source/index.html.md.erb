@@ -321,3 +321,39 @@ currently authorized account has accss to.
 Parameter | Default | Description
 --------- | ------- | -----------
 since     | false   | The number of seconds to look back, see API description above.
+
+# Sessions
+
+## Get Account Sessions
+
+`GET <%= config[:api_endpoint] %>/sessions`
+
+```shell
+curl --header "Authorization: API_KEY" -i <%= config[:api_endpoint] %>/sessions
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "ip": "10.10.10.10",
+    "email": "sergey@google.com"
+  },
+  {
+    "ip": "10.10.10.10",
+    "email": "larry@google.com"
+ }
+]
+```
+
+This API endpoint returns a paginated list of sessions sorted by the order they were created with the most recent first.
+Sessions represent successful logins by users of your account.
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+page | true | The page of session results with 1 as the first page.
+
+
