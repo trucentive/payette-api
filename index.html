@@ -258,6 +258,14 @@
               </ul>
           </li>
           <li>
+            <a href="#sessions" class="toc-h1 toc-link" data-title="Sessions">Sessions</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-account-sessions" class="toc-h2 toc-link" data-title="Get Account Sessions">Get Account Sessions</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
@@ -576,6 +584,40 @@ currently authorized account has accss to.</p>
 <td>since</td>
 <td>false</td>
 <td>The number of seconds to look back, see API description above.</td>
+</tr>
+</tbody></table>
+<h1 id='sessions'>Sessions</h1><h2 id='get-account-sessions'>Get Account Sessions</h2>
+<p><code>GET https://app.trucentive.com/api/v1/sessions</code></p>
+<pre class="highlight shell tab-shell"><code>curl --header <span class="s2">"Authorization: API_KEY"</span> -i https://app.trucentive.com/api/v1/sessions
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.10"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sergey@google.com"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.10.10.10"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"larry@google.com"</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This API endpoint returns a paginated list of sessions sorted by the order they were created with the most recent first.
+Sessions represent successful logins by users of your account.</p>
+<h3 id='query-parameters-7'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>page</td>
+<td>true</td>
+<td>The page of session results with 1 as the first page.</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
