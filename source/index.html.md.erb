@@ -221,6 +221,7 @@ address         | true    | The email address or phone number to send to
 instrument_uuid | true    | The instrument (type of reward) to send
 first_name      | false   | The first name of the person the envelope is being sent to
 last_name       | false   | The last name of the person the envelope is being sent to
+batch_allowed   | false   | Boolean - When batch_allowed is true, trucentive will not deliver the email. You can fetch the URL from the SHOW Envelope endpoint.
 
 ### Custom Fields
 Custom Fields may be included in the envelope delivery request. The custom fields must be defined beforehand in your account. Format the data like this:
@@ -229,6 +230,50 @@ Custom Fields may be included in the envelope delivery request. The custom field
   "custom_color": "periwinkle",
   "custom_size": "large"
 }`
+
+## Get Envelope Details
+
+`GET <%= config[:api_endpoint] %>/envelope`
+
+> The above command returns JSON structured like this:
+
+```json
+  {
+    "id":"CDVLBYYIOPHLJVWYEF",
+    "uuid":"CDVLBYYIOPHLJVWYEF",
+    "addresses": [
+      {
+        "uuid":"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f",
+        "format":"mailto",
+        "delivery_address":"john.smith@test.com"
+      },
+      {
+        "uuid":"addr-2e947b94-c676-4696-b184-01994a38b07f",
+        "format":"sms",
+        "delivery_address":"261-123-1231"
+      }
+    ],
+    "project": {
+      "uuid":"project-2690d664-5199-4fe0-a37c-6f3cc339d882",
+      "name":"Test Project"
+    },
+    "state":"approved",
+    "delivered_at":"2019-12-09T23:59:59.999Z",
+    "opened_at":null,
+    "viewed_at":"2019-12-09T23:59:59.999Z",
+    "expires_at":"2019-12-09T23:59:59.999Z",
+    "test_mode":false
+  }
+```
+
+This API endpoint returns details of an envelope.
+
+### Query Parameters
+
+Parameter     | Default | Description
+------------- | ------- | -----------
+envelope_uuid | false   | Required - The ID of the envelope to fetch
+show_url      | false   | Boolean - if show_url is "true" the response will include a url attribute that can redeem the envelope
 
 ## Get Viewed Envelopes
 
