@@ -250,6 +250,9 @@
                     <a href="#send-an-envelope" class="toc-h2 toc-link" data-title="Send An Envelope">Send An Envelope</a>
                   </li>
                   <li>
+                    <a href="#get-envelope-details" class="toc-h2 toc-link" data-title="Get Envelope Details">Get Envelope Details</a>
+                  </li>
+                  <li>
                     <a href="#get-viewed-envelopes" class="toc-h2 toc-link" data-title="Get Viewed Envelopes">Get Viewed Envelopes</a>
                   </li>
                   <li>
@@ -476,6 +479,11 @@ instrument).</p>
 <td>false</td>
 <td>The last name of the person the envelope is being sent to</td>
 </tr>
+<tr>
+<td>batch_allowed</td>
+<td>false</td>
+<td>Boolean - When batch_allowed is true, trucentive will not deliver the email. You can fetch the URL from the SHOW Envelope endpoint.</td>
+</tr>
 </tbody></table>
 <h3 id='custom-fields'>Custom Fields</h3>
 <p>Custom Fields may be included in the envelope delivery request. The custom fields must be defined beforehand in your account. Format the data like this:</p>
@@ -484,6 +492,59 @@ instrument).</p>
   &quot;custom_color&quot;: &quot;periwinkle&quot;,
   &quot;custom_size&quot;: &quot;large&quot;
 }</code></p>
+<h2 id='get-envelope-details'>Get Envelope Details</h2>
+<p><code>GET https://app.trucentive.com/api/v1/envelope</code></p>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"format"</span><span class="p">:</span><span class="s2">"mailto"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="s2">"john.smith@test.com"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"addr-2e947b94-c676-4696-b184-01994a38b07f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"format"</span><span class="p">:</span><span class="s2">"sms"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="s2">"261-123-1231"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"project-2690d664-5199-4fe0-a37c-6f3cc339d882"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Test Project"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"state"</span><span class="p">:</span><span class="s2">"approved"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"delivered_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"opened_at"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"viewed_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This API endpoint returns details of an envelope.</p>
+<h3 id='query-parameters-5'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>envelope_uuid</td>
+<td>false</td>
+<td>Required - The ID of the envelope to fetch</td>
+</tr>
+<tr>
+<td>show_url</td>
+<td>false</td>
+<td>Boolean - if show_url is &quot;true&quot; the response will include a url attribute that can redeem the envelope</td>
+</tr>
+</tbody></table>
 <h2 id='get-viewed-envelopes'>Get Viewed Envelopes</h2>
 <p><code>GET https://app.trucentive.com/api/v1/envelopes/viewed</code></p>
 
@@ -521,7 +582,7 @@ instrument).</p>
 </span></code></pre>
 <p>This API endpoint returns a list of envelopes viewed in the last hour (by default, but can be configured using a
 query parameter) for projects that the currently authorized account has accss to.</p>
-<h3 id='query-parameters-5'>Query Parameters</h3>
+<h3 id='query-parameters-6'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -572,7 +633,7 @@ query parameter) for projects that the currently authorized account has accss to
 </span></code></pre>
 <p>This API endpoint returns a list of envelopes viewed in the last hour for projects that the
 currently authorized account has accss to.</p>
-<h3 id='query-parameters-6'>Query Parameters</h3>
+<h3 id='query-parameters-7'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -606,7 +667,7 @@ currently authorized account has accss to.</p>
 </span></code></pre>
 <p>This API endpoint returns a paginated list of sessions sorted by the order they were created with the most recent first.
 Sessions represent successful logins by users of your account.</p>
-<h3 id='query-parameters-7'>Query Parameters</h3>
+<h3 id='query-parameters-8'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
