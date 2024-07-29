@@ -701,23 +701,6 @@ query parameter) for projects that the currently authorized account has accss to
 <td>UUID of the envelope to open</td>
 </tr>
 </tbody></table>
-
-<p>This API endpoint returns a list of envelopes viewed in the last hour for projects that the
-currently authorized account has accss to.</p>
-<h3 id='query-parameters-8'>Query Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>since</td>
-<td>false</td>
-<td>The number of seconds to look back, see API description above.</td>
-</tr>
-</tbody></table>
 <h1 id='sessions'>Sessions</h1><h2 id='get-account-sessions'>Get Account Sessions</h2>
 <p><code>GET https://app.trucentive.com/api/v1/sessions</code></p>
 <pre class="highlight shell tab-shell"><code>curl --header <span class="s2">"Authorization: API_KEY"</span> -i https://app.trucentive.com/api/v1/sessions
@@ -738,7 +721,7 @@ currently authorized account has accss to.</p>
 </span></code></pre>
 <p>This API endpoint returns a paginated list of sessions sorted by the order they were created with the most recent first.
 Sessions represent successful logins by users of your account.</p>
-<h3 id='query-parameters-9'>Query Parameters</h3>
+<h3 id='query-parameters-8'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
