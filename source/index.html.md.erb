@@ -399,6 +399,8 @@ curl -X POST <%= config[:api_endpoint] %>/envelope/open?api_key=API_KEY
   }
 ```
 
+This API endpoint will queue an envelope for opening. Envelope opening happens asynchronously. The Envelope details endpoint can be used to monitor the status of the envelope if you need to see the result of this operation. Failures and errors may occur during opening even when this API call is successful. It is safe to retry opening an envelope.
+
 ### Possible errors
 
 Outside of the standard API error messages in the <a href="#errors">errors section</a> below there are several error messages that can be returned in the 'error' field of the json error message with the status code 400.
