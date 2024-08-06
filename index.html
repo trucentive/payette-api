@@ -639,9 +639,8 @@ query parameter) for projects that the currently authorized account has accss to
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre><h2 id='open-an-envelope'>Open An Envelope</h2>
-<p><code>POST https://app.trucentive.com/api/v1/envelope/open</code></p>
-<pre class="highlight shell tab-shell"><code>curl -X POST https://app.trucentive.com/api/v1/envelope/open?api_key<span class="o">=</span>API_KEY
-  -d <span class="nv">enelope_uuid</span><span class="o">=</span>env-d3c774ac-3f48-4dfc-bf76-af79d2e3433e <span class="se">\</span>
+<p><code>POST https://app.trucentive.com/api/v1/envelopes/:envelope_id/open</code></p>
+<pre class="highlight shell tab-shell"><code>curl -X POST https://app.trucentive.com/api/v1/envelopes/CDVLBYYIOPHLJVWYEF/open?api_key<span class="o">=</span>API_KEY
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this with information about the envelope queued for opening.</p>
@@ -681,13 +680,16 @@ query parameter) for projects that the currently authorized account has accss to
 <p>If an error occurs it will be returned like this:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Envelope cannot be opened because the envelope is locked!"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cannot open envelope."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"details"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"full_error_messages"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Envelope cannot be opened because the envelope is locked"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <ul>
 <li>Locked - If the envelope was a gated delivery it is currently not supported to open by the API.</li>
-<li>Not in openable state - If the envelope was expired or some other un-openable state.</li>
+<li>Cannot choose incentive - The incentive cannot be chosen for the envelope. For example, the envelope has expired or there are multiple incentives to choose.</li>
 </ul>
 <h3 id='query-parameters-7'>Query Parameters</h3>
 <table><thead>
