@@ -361,11 +361,10 @@ since     | false   | The number of seconds to look back, see API description ab
 
 ## Open An Envelope
 
-`POST <%= config[:api_endpoint] %>/envelope/open`
+`POST <%= config[:api_endpoint] %>/envelopes/:envelope_id/open`
 
 ```shell
-curl -X POST <%= config[:api_endpoint] %>/envelope/open?api_key=API_KEY
-  -d enelope_uuid=env-d3c774ac-3f48-4dfc-bf76-af79d2e3433e \
+curl -X POST <%= config[:api_endpoint] %>/envelopes/CDVLBYYIOPHLJVWYEF/open?api_key=API_KEY
 ```
 
 > The above command returns JSON structured like this with information about the envelope queued for opening.
@@ -409,13 +408,16 @@ Outside of the standard API error messages in the <a href="#errors">errors secti
 
 ```json
 {
-  "error": "Envelope cannot be opened because the envelope is locked!",
-  "status": 400
+  "error": "Cannot open envelope.",
+  "status": 400,
+  "details": {
+    "full_error_messages": "Envelope cannot be opened because the envelope is locked"
+  }
 }
 ```
 
 * Locked - If the envelope was a gated delivery it is currently not supported to open by the API.
-* Not in openable state - If the envelope was expired or some other un-openable state.
+* Cannot choose incentive - The incentive cannot be chosen for the envelope. For example, the envelope has expired or there are multiple incentives to choose.
 
 ### Query Parameters
 
@@ -456,5 +458,3 @@ Sessions represent successful logins by users of your account.
 Parameter | Default | Description
 --------- | ------- | -----------
 page | true | The page of session results with 1 as the first page.
-
-
