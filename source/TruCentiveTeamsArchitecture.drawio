@@ -318,6 +318,9 @@
             </Array>
           </mxGeometry>
         </mxCell>
+        <mxCell id="z65lbmzSRDmLH-xs5q2x-12" value="Note about Heroku Common Runtime:&amp;nbsp;&amp;nbsp;Each dyno is secured with strong firewall rules so even though all dynos run in a single, flat network, they are strongly isolated from each other.&amp;nbsp;&lt;a href=&quot;https://www.heroku.com/compliance&quot;&gt;https://www.heroku.com/compliance&lt;/a&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="557.25" y="180" width="539.5" height="30" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
