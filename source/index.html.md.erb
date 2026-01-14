@@ -458,3 +458,299 @@ Sessions represent successful logins by users of your account.
 Parameter | Default | Description
 --------- | ------- | -----------
 page | true | The page of session results with 1 as the first page.
+
+# Webhooks
+
+Webhooks allow you to receive real-time HTTP notifications when events occur in your TruCentive account. Instead of polling the API to check for updates, webhooks push data to your server as events happen.
+
+## Overview
+
+When an event occurs (such as an envelope being delivered, viewed, or opened), TruCentive sends an HTTP POST request to your configured webhook URL with details about the event. This enables you to:
+
+* Update your systems in real-time when recipients interact with envelopes
+* Trigger automated workflows based on envelope events
+* Maintain synchronized records without polling the API
+
+<aside class="notice">
+Webhooks are configured at the account level. Contact your TruCentive representative or configure webhooks in your account settings.
+</aside>
+
+## Webhook Events
+
+TruCentive can send webhooks for the following envelope state change events:
+
+Event | Description
+----- | -----------
+envelope.pending | An envelope has been created and is pending processing
+envelope.approval_needed | An envelope requires approval before delivery
+envelope.approved | An envelope has been approved for delivery
+envelope.pending_delivery | An envelope is queued for delivery
+envelope.delivered | An envelope has been successfully delivered to the recipient
+envelope.viewed | A recipient has viewed their envelope
+envelope.opened | A recipient has opened (redeemed) their envelope
+envelope.expired | An envelope has expired without being redeemed
+envelope.rejected | An envelope has been rejected
+envelope.revoked | An envelope has been revoked
+
+## Webhook Payload
+
+> Example webhook payload for an envelope.delivered event:
+
+```json
+{
+  "event": "envelope.delivered",
+  "timestamp": "2024-01-15T14:30:00.123Z",
+  "webhook_id": "whk-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "data": {
+    "id": "CDVLBYYIOPHLJVWYEF",
+    "uuid": "CDVLBYYIOPHLJVWYEF",
+    "addresses": [
+      {
+        "uuid": "addr-9d2db7c4-0351-47c7-9d43-330641f4be3f",
+        "format": "mailto",
+        "delivery_address": "john.smith@test.com"
+      }
+    ],
+    "project": {
+      "uuid": "project-e6a53849-fb46-4abd-9f43-c88c58705a9d",
+      "name": "Test Project"
+    },
+    "state": "delivered",
+    "delivered_at": "2024-01-15T14:30:00.000Z",
+    "opened_at": null,
+    "viewed_at": null,
+    "expires_at": "2024-02-15T23:59:59.999Z",
+    "test_mode": false,
+    "custom_fields": {
+      "custom_color": "periwinkle"
+    }
+  }
+}
+```
+
+> Example webhook payload for an envelope.viewed event:
+
+```json
+{
+  "event": "envelope.viewed",
+  "timestamp": "2024-01-16T10:15:00.456Z",
+  "webhook_id": "whk-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "data": {
+    "id": "CDVLBYYIOPHLJVWYEF",
+    "uuid": "CDVLBYYIOPHLJVWYEF",
+    "addresses": [
+      {
+        "uuid": "addr-9d2db7c4-0351-47c7-9d43-330641f4be3f",
+        "format": "mailto",
+        "delivery_address": "john.smith@test.com"
+      }
+    ],
+    "project": {
+      "uuid": "project-e6a53849-fb46-4abd-9f43-c88c58705a9d",
+      "name": "Test Project"
+    },
+    "state": "delivered",
+    "delivered_at": "2024-01-15T14:30:00.000Z",
+    "opened_at": null,
+    "viewed_at": "2024-01-16T10:15:00.000Z",
+    "expires_at": "2024-02-15T23:59:59.999Z",
+    "test_mode": false,
+    "custom_fields": {
+      "custom_color": "periwinkle"
+    }
+  }
+}
+```
+
+> Example webhook payload for an envelope.opened event with redemption_url:
+
+```json
+{
+  "event": "envelope.opened",
+  "timestamp": "2024-01-16T10:20:00.789Z",
+  "webhook_id": "whk-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "data": {
+    "id": "CDVLBYYIOPHLJVWYEF",
+    "uuid": "CDVLBYYIOPHLJVWYEF",
+    "addresses": [
+      {
+        "uuid": "addr-9d2db7c4-0351-47c7-9d43-330641f4be3f",
+        "format": "mailto",
+        "delivery_address": "john.smith@test.com"
+      }
+    ],
+    "project": {
+      "uuid": "project-e6a53849-fb46-4abd-9f43-c88c58705a9d",
+      "name": "Test Project"
+    },
+    "state": "opened",
+    "delivered_at": "2024-01-15T14:30:00.000Z",
+    "opened_at": "2024-01-16T10:20:00.000Z",
+    "viewed_at": "2024-01-16T10:15:00.000Z",
+    "expires_at": "2024-02-15T23:59:59.999Z",
+    "test_mode": false,
+    "custom_fields": {
+      "custom_color": "periwinkle"
+    },
+    "redemption_url": "https://example.com/redeem/abc123"
+  }
+}
+```
+
+All webhook payloads include the following fields:
+
+Field | Description
+----- | -----------
+event | The type of event that triggered the webhook (e.g., `envelope.delivered`)
+timestamp | ISO 8601 timestamp with millisecond precision of when the event occurred
+webhook_id | The unique identifier of the webhook configuration that triggered this delivery
+data | The envelope object with full details
+
+### Data Object Fields
+
+Field | Description
+----- | -----------
+id | The envelope identifier
+uuid | The envelope UUID (same as id)
+addresses | Array of delivery addresses with uuid, format, and delivery_address
+project | Object containing the project uuid and name
+state | Current state of the envelope
+delivered_at | Timestamp when the envelope was delivered (null if not yet delivered)
+viewed_at | Timestamp when the envelope was viewed (null if not yet viewed)
+opened_at | Timestamp when the envelope was opened/redeemed (null if not yet opened)
+expires_at | Timestamp when the envelope expires
+test_mode | Boolean indicating if this is a test envelope
+custom_fields | Object containing custom field values (only included if your account has custom fields enabled)
+redemption_url | External redemption URL (only included for opened envelopes when the webhook has redemption_url enabled and the selected incentive has an external URL)
+
+## Verifying Webhook Signatures
+
+> Example signature verification in Ruby:
+
+```shell
+# The signature is sent in the TruCentive-Signature header
+# Format: sha256=<hexdigest>
+
+# Ruby example:
+require 'openssl'
+
+received_signature = request.headers['TruCentive-Signature']
+payload_body = request.body.read
+
+expected_signature = 'sha256=' + OpenSSL::HMAC.hexdigest(
+  'SHA256',
+  webhook_signing_secret,
+  payload_body
+)
+
+if Rack::Utils.secure_compare(expected_signature, received_signature)
+  # Signature is valid
+end
+```
+
+> Example signature verification in Node.js:
+
+```shell
+# Node.js example:
+const crypto = require('crypto');
+
+const receivedSignature = req.headers['trucentive-signature'];
+const payloadBody = JSON.stringify(req.body);
+
+const expectedSignature = 'sha256=' + crypto
+  .createHmac('sha256', webhookSigningSecret)
+  .update(payloadBody)
+  .digest('hex');
+
+if (crypto.timingSafeEqual(
+  Buffer.from(expectedSignature),
+  Buffer.from(receivedSignature)
+)) {
+  // Signature is valid
+}
+```
+
+> Example signature verification in Python:
+
+```shell
+# Python example:
+import hmac
+import hashlib
+
+received_signature = request.headers.get('TruCentive-Signature')
+payload_body = request.get_data(as_text=True)
+
+expected_signature = 'sha256=' + hmac.new(
+    webhook_signing_secret.encode(),
+    payload_body.encode(),
+    hashlib.sha256
+).hexdigest()
+
+if hmac.compare_digest(expected_signature, received_signature):
+    # Signature is valid
+```
+
+To verify that a webhook request is authentic and originated from TruCentive, each webhook request includes a signature in the `TruCentive-Signature` header.
+
+The signature format is `sha256=<hexdigest>`, where the hexdigest is computed as an HMAC-SHA256 hash of the raw JSON request body using your webhook signing secret as the key.
+
+<aside class="warning">
+Always verify webhook signatures before processing webhook data. This prevents attackers from sending fake webhook requests to your endpoint.
+</aside>
+
+### Verification Steps
+
+1. Extract the signature from the `TruCentive-Signature` header
+2. Compute the HMAC-SHA256 hash of the raw request body using your webhook signing secret
+3. Prepend `sha256=` to the computed hexdigest
+4. Compare the computed signature to the received signature using a constant-time comparison function
+5. Only process the webhook if the signatures match
+
+Your webhook signing secret can be found in your account settings alongside your webhook configuration. You can regenerate the signing secret at any time if it becomes compromised.
+
+## HTTP Request Details
+
+TruCentive webhook requests include the following headers:
+
+Header | Value
+------ | -----
+Content-Type | application/json
+TruCentive-Signature | sha256=&lt;hexdigest&gt;
+User-Agent | TruCentive-Webhooks/1.0
+
+<aside class="notice">
+Webhook URLs must use HTTPS. HTTP URLs are not supported.
+</aside>
+
+## Responding to Webhooks
+
+Your webhook endpoint should return a `2xx` HTTP status code to acknowledge receipt of the webhook. Any other status code will be treated as a failure.
+
+<aside class="notice">
+Return a <code>200 OK</code> response as quickly as possible. The webhook request has a 5-second timeout. Perform any time-consuming processing asynchronously after acknowledging the webhook.
+</aside>
+
+## Best Practices
+
+### Idempotency
+
+Your webhook handler should be idempotent, meaning it can safely receive the same webhook multiple times without causing duplicate side effects. Store the envelope `uuid` and event type to detect and ignore duplicate webhooks.
+
+### Security
+
+* Always verify the webhook signature before processing
+* Use HTTPS for your webhook endpoint (required)
+* Keep your webhook signing secret secure and regenerate it if compromised
+* Validate that the envelope UUID in the webhook corresponds to a known envelope in your system
+
+### Performance
+
+* Respond to webhooks quickly (within 5 seconds)
+* Process webhook data asynchronously if your handler requires time-consuming operations
+* Use a queue to handle high volumes of webhooks
+
+### Error Handling
+
+* Log all received webhooks for debugging purposes
+* Monitor your webhook endpoint for failures
+* Set up alerts for webhook delivery failures
