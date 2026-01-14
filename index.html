@@ -272,6 +272,32 @@
               </ul>
           </li>
           <li>
+            <a href="#webhooks" class="toc-h1 toc-link" data-title="Webhooks">Webhooks</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
+                  </li>
+                  <li>
+                    <a href="#webhook-events" class="toc-h2 toc-link" data-title="Webhook Events">Webhook Events</a>
+                  </li>
+                  <li>
+                    <a href="#webhook-payload" class="toc-h2 toc-link" data-title="Webhook Payload">Webhook Payload</a>
+                  </li>
+                  <li>
+                    <a href="#verifying-webhook-signatures" class="toc-h2 toc-link" data-title="Verifying Webhook Signatures">Verifying Webhook Signatures</a>
+                  </li>
+                  <li>
+                    <a href="#http-request-details" class="toc-h2 toc-link" data-title="HTTP Request Details">HTTP Request Details</a>
+                  </li>
+                  <li>
+                    <a href="#responding-to-webhooks" class="toc-h2 toc-link" data-title="Responding to Webhooks">Responding to Webhooks</a>
+                  </li>
+                  <li>
+                    <a href="#best-practices" class="toc-h2 toc-link" data-title="Best Practices">Best Practices</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
@@ -739,6 +765,385 @@ Sessions represent successful logins by users of your account.</p>
 <td>The page of session results with 1 as the first page.</td>
 </tr>
 </tbody></table>
+<h1 id='webhooks'>Webhooks</h1>
+<p>Webhooks allow you to receive real-time HTTP notifications when events occur in your TruCentive account. Instead of polling the API to check for updates, webhooks push data to your server as events happen.</p>
+<h2 id='overview'>Overview</h2>
+<p>When an event occurs (such as an envelope being delivered, viewed, or opened), TruCentive sends an HTTP POST request to your configured webhook URL with details about the event. This enables you to:</p>
+
+<ul>
+<li>Update your systems in real-time when recipients interact with envelopes</li>
+<li>Trigger automated workflows based on envelope events</li>
+<li>Maintain synchronized records without polling the API</li>
+</ul>
+
+<aside class="notice">
+Webhooks are configured at the account level. Contact your TruCentive representative or configure webhooks in your account settings.
+</aside>
+<h2 id='webhook-events'>Webhook Events</h2>
+<p>TruCentive can send webhooks for the following envelope state change events:</p>
+
+<table><thead>
+<tr>
+<th>Event</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>envelope.pending</td>
+<td>An envelope has been created and is pending processing</td>
+</tr>
+<tr>
+<td>envelope.approval_needed</td>
+<td>An envelope requires approval before delivery</td>
+</tr>
+<tr>
+<td>envelope.approved</td>
+<td>An envelope has been approved for delivery</td>
+</tr>
+<tr>
+<td>envelope.pending_delivery</td>
+<td>An envelope is queued for delivery</td>
+</tr>
+<tr>
+<td>envelope.delivered</td>
+<td>An envelope has been successfully delivered to the recipient</td>
+</tr>
+<tr>
+<td>envelope.viewed</td>
+<td>A recipient has viewed their envelope</td>
+</tr>
+<tr>
+<td>envelope.opened</td>
+<td>A recipient has opened (redeemed) their envelope</td>
+</tr>
+<tr>
+<td>envelope.expired</td>
+<td>An envelope has expired without being redeemed</td>
+</tr>
+<tr>
+<td>envelope.rejected</td>
+<td>An envelope has been rejected</td>
+</tr>
+<tr>
+<td>envelope.revoked</td>
+<td>An envelope has been revoked</td>
+</tr>
+</tbody></table>
+<h2 id='webhook-payload'>Webhook Payload</h2>
+<blockquote>
+<p>Example webhook payload for an envelope.delivered event:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"envelope.delivered"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T14:30:00.123Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"webhook_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"whk-a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mailto"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john.smith@test.com"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"project-e6a53849-fb46-4abd-9f43-c88c58705a9d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Project"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"delivered_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T14:30:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"opened_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"viewed_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-02-15T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"custom_fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"custom_color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"periwinkle"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Example webhook payload for an envelope.viewed event:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"envelope.viewed"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-16T10:15:00.456Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"webhook_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"whk-a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mailto"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john.smith@test.com"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"project-e6a53849-fb46-4abd-9f43-c88c58705a9d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Project"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"delivered_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T14:30:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"opened_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"viewed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-16T10:15:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-02-15T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"custom_fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"custom_color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"periwinkle"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Example webhook payload for an envelope.opened event with redemption_url:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"envelope.opened"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-16T10:20:00.789Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"webhook_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"whk-a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CDVLBYYIOPHLJVWYEF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"addr-9d2db7c4-0351-47c7-9d43-330641f4be3f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mailto"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"delivery_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john.smith@test.com"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"project-e6a53849-fb46-4abd-9f43-c88c58705a9d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Project"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"opened"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"delivered_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T14:30:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"opened_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-16T10:20:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"viewed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-16T10:15:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-02-15T23:59:59.999Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"custom_fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"custom_color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"periwinkle"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"redemption_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/redeem/abc123"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>All webhook payloads include the following fields:</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>event</td>
+<td>The type of event that triggered the webhook (e.g., <code>envelope.delivered</code>)</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>ISO 8601 timestamp with millisecond precision of when the event occurred</td>
+</tr>
+<tr>
+<td>webhook_id</td>
+<td>The unique identifier of the webhook configuration that triggered this delivery</td>
+</tr>
+<tr>
+<td>data</td>
+<td>The envelope object with full details</td>
+</tr>
+</tbody></table>
+<h3 id='data-object-fields'>Data Object Fields</h3>
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>The envelope identifier</td>
+</tr>
+<tr>
+<td>uuid</td>
+<td>The envelope UUID (same as id)</td>
+</tr>
+<tr>
+<td>addresses</td>
+<td>Array of delivery addresses with uuid, format, and delivery_address</td>
+</tr>
+<tr>
+<td>project</td>
+<td>Object containing the project uuid and name</td>
+</tr>
+<tr>
+<td>state</td>
+<td>Current state of the envelope</td>
+</tr>
+<tr>
+<td>delivered_at</td>
+<td>Timestamp when the envelope was delivered (null if not yet delivered)</td>
+</tr>
+<tr>
+<td>viewed_at</td>
+<td>Timestamp when the envelope was viewed (null if not yet viewed)</td>
+</tr>
+<tr>
+<td>opened_at</td>
+<td>Timestamp when the envelope was opened/redeemed (null if not yet opened)</td>
+</tr>
+<tr>
+<td>expires_at</td>
+<td>Timestamp when the envelope expires</td>
+</tr>
+<tr>
+<td>test_mode</td>
+<td>Boolean indicating if this is a test envelope</td>
+</tr>
+<tr>
+<td>custom_fields</td>
+<td>Object containing custom field values (only included if your account has custom fields enabled)</td>
+</tr>
+<tr>
+<td>redemption_url</td>
+<td>External redemption URL (only included for opened envelopes when the webhook has redemption_url enabled and the selected incentive has an external URL)</td>
+</tr>
+</tbody></table>
+<h2 id='verifying-webhook-signatures'>Verifying Webhook Signatures</h2>
+<blockquote>
+<p>Example signature verification in Ruby:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># The signature is sent in the TruCentive-Signature header</span>
+<span class="c"># Format: sha256=&lt;hexdigest&gt;</span>
+
+<span class="c"># Ruby example:</span>
+require <span class="s1">'openssl'</span>
+
+received_signature <span class="o">=</span> request.headers[<span class="s1">'TruCentive-Signature'</span><span class="o">]</span>
+payload_body <span class="o">=</span> request.body.read
+
+expected_signature <span class="o">=</span> <span class="s1">'sha256='</span> + OpenSSL::HMAC.hexdigest<span class="o">(</span>
+  <span class="s1">'SHA256'</span>,
+  webhook_signing_secret,
+  payload_body
+<span class="o">)</span>
+
+<span class="k">if </span>Rack::Utils.secure_compare<span class="o">(</span>expected_signature, received_signature<span class="o">)</span>
+  <span class="c"># Signature is valid</span>
+end
+</code></pre>
+<blockquote>
+<p>Example signature verification in Node.js:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Node.js example:</span>
+const crypto <span class="o">=</span> require<span class="o">(</span><span class="s1">'crypto'</span><span class="o">)</span>;
+
+const receivedSignature <span class="o">=</span> req.headers[<span class="s1">'trucentive-signature'</span><span class="o">]</span>;
+const payloadBody <span class="o">=</span> JSON.stringify<span class="o">(</span>req.body<span class="o">)</span>;
+
+const expectedSignature <span class="o">=</span> <span class="s1">'sha256='</span> + crypto
+  .createHmac<span class="o">(</span><span class="s1">'sha256'</span>, webhookSigningSecret<span class="o">)</span>
+  .update<span class="o">(</span>payloadBody<span class="o">)</span>
+  .digest<span class="o">(</span><span class="s1">'hex'</span><span class="o">)</span>;
+
+<span class="k">if</span> <span class="o">(</span>crypto.timingSafeEqual<span class="o">(</span>
+  Buffer.from<span class="o">(</span>expectedSignature<span class="o">)</span>,
+  Buffer.from<span class="o">(</span>receivedSignature<span class="o">)</span>
+<span class="o">))</span> <span class="o">{</span>
+  // Signature is valid
+<span class="o">}</span>
+</code></pre>
+<blockquote>
+<p>Example signature verification in Python:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Python example:</span>
+import hmac
+import hashlib
+
+received_signature <span class="o">=</span> request.headers.get<span class="o">(</span><span class="s1">'TruCentive-Signature'</span><span class="o">)</span>
+payload_body <span class="o">=</span> request.get_data<span class="o">(</span><span class="nv">as_text</span><span class="o">=</span>True<span class="o">)</span>
+
+expected_signature <span class="o">=</span> <span class="s1">'sha256='</span> + hmac.new<span class="o">(</span>
+    webhook_signing_secret.encode<span class="o">()</span>,
+    payload_body.encode<span class="o">()</span>,
+    hashlib.sha256
+<span class="o">)</span>.hexdigest<span class="o">()</span>
+
+<span class="k">if </span>hmac.compare_digest<span class="o">(</span>expected_signature, received_signature<span class="o">)</span>:
+    <span class="c"># Signature is valid</span>
+</code></pre>
+<p>To verify that a webhook request is authentic and originated from TruCentive, each webhook request includes a signature in the <code>TruCentive-Signature</code> header.</p>
+
+<p>The signature format is <code>sha256=&lt;hexdigest&gt;</code>, where the hexdigest is computed as an HMAC-SHA256 hash of the raw JSON request body using your webhook signing secret as the key.</p>
+
+<aside class="warning">
+Always verify webhook signatures before processing webhook data. This prevents attackers from sending fake webhook requests to your endpoint.
+</aside>
+<h3 id='verification-steps'>Verification Steps</h3>
+<ol>
+<li>Extract the signature from the <code>TruCentive-Signature</code> header</li>
+<li>Compute the HMAC-SHA256 hash of the raw request body using your webhook signing secret</li>
+<li>Prepend <code>sha256=</code> to the computed hexdigest</li>
+<li>Compare the computed signature to the received signature using a constant-time comparison function</li>
+<li>Only process the webhook if the signatures match</li>
+</ol>
+
+<p>Your webhook signing secret can be found in your account settings alongside your webhook configuration. You can regenerate the signing secret at any time if it becomes compromised.</p>
+<h2 id='http-request-details'>HTTP Request Details</h2>
+<p>TruCentive webhook requests include the following headers:</p>
+
+<table><thead>
+<tr>
+<th>Header</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Content-Type</td>
+<td>application/json</td>
+</tr>
+<tr>
+<td>TruCentive-Signature</td>
+<td>sha256=&lt;hexdigest&gt;</td>
+</tr>
+<tr>
+<td>User-Agent</td>
+<td>TruCentive-Webhooks/1.0</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Webhook URLs must use HTTPS. HTTP URLs are not supported.
+</aside>
+<h2 id='responding-to-webhooks'>Responding to Webhooks</h2>
+<p>Your webhook endpoint should return a <code>2xx</code> HTTP status code to acknowledge receipt of the webhook. Any other status code will be treated as a failure.</p>
+
+<aside class="notice">
+Return a <code>200 OK</code> response as quickly as possible. The webhook request has a 5-second timeout. Perform any time-consuming processing asynchronously after acknowledging the webhook.
+</aside>
+<h2 id='best-practices'>Best Practices</h2><h3 id='idempotency'>Idempotency</h3>
+<p>Your webhook handler should be idempotent, meaning it can safely receive the same webhook multiple times without causing duplicate side effects. Store the envelope <code>uuid</code> and event type to detect and ignore duplicate webhooks.</p>
+<h3 id='security'>Security</h3>
+<ul>
+<li>Always verify the webhook signature before processing</li>
+<li>Use HTTPS for your webhook endpoint (required)</li>
+<li>Keep your webhook signing secret secure and regenerate it if compromised</li>
+<li>Validate that the envelope UUID in the webhook corresponds to a known envelope in your system</li>
+</ul>
+<h3 id='performance'>Performance</h3>
+<ul>
+<li>Respond to webhooks quickly (within 5 seconds)</li>
+<li>Process webhook data asynchronously if your handler requires time-consuming operations</li>
+<li>Use a queue to handle high volumes of webhooks</li>
+</ul>
+<h3 id='error-handling'>Error Handling</h3>
+<ul>
+<li>Log all received webhooks for debugging purposes</li>
+<li>Monitor your webhook endpoint for failures</li>
+<li>Set up alerts for webhook delivery failures</li>
+</ul>
 <h1 id='errors'>Errors</h1>
 <aside class="notice">
 Listed below are the errors that are common across all APIs. Where invididual APIs can return different errors they will
