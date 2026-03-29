@@ -82,7 +82,7 @@ GEM
       rouge (~> 2.0)
     mini_portile2 (2.8.1)
     minitest (5.17.0)
-    nokogiri (1.14.0)
+    nokogiri (1.14.3)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     padrino-helpers (0.15.1)
