@@ -419,6 +419,47 @@ Outside of the standard API error messages in the <a href="#errors">errors secti
 * Locked - If the envelope was a gated delivery it is currently not supported to open by the API.
 * Cannot choose incentive - The incentive cannot be chosen for the envelope. For example, the envelope has expired or there are multiple incentives to choose.
 
+### required_fields response
+
+Some incentive types require additional parameters to open via API. When a required parameter is missing, the API returns a 400 with a `required_fields` object describing what must be provided:
+
+```json
+{
+  "error": "Cannot choose incentive.",
+  "status": 400,
+  "details": {
+    "required_fields": {
+      "contact_information": {
+        "first_name":   { "required": true },
+        "last_name":    { "required": true },
+        "address1":     { "required": true },
+        "address2":     { "required": false },
+        "city":         { "required": true },
+        "state":        { "required": true },
+        "postal_code":  { "required": true },
+        "mobile_phone": { "required": true },
+        "email":        { "required": true }
+      }
+    }
+  }
+}
+```
+
+Re-submit the request with the required fields populated. If the supplied values fail validation, a 422 is returned instead with an `errors` array:
+
+```json
+{
+  "error": "Cannot choose incentive.",
+  "status": 422,
+  "details": {
+    "errors": [
+      "First name can't be blank",
+      "Address1 can't be blank"
+    ]
+  }
+}
+```
+
 ### Query Parameters
 
 Parameter     | Default | Description
