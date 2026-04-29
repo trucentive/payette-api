@@ -594,6 +594,7 @@ envelope.revoked | An envelope has been revoked
       "custom_color": "periwinkle"
     },
     "redemption_url": "https://example.com/redeem/abc123"
+    "redemption_code": "1234"
   }
 }
 ```
@@ -623,6 +624,7 @@ expires_at | Timestamp when the envelope expires
 test_mode | Boolean indicating if this is a test envelope
 custom_fields | Object containing custom field values (only included if your account has custom fields enabled)
 redemption_url | External redemption URL (only included for opened envelopes when the webhook has redemption_url enabled and the selected incentive has an external URL)
+redemption_code | External redemption code (only included for opened envelopes when the webhook has redemption_url enabled and the selected incentive has an external pin-type token)
 
 ## Verifying Webhook Signatures
 
