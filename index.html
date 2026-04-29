@@ -615,7 +615,10 @@ instrument).</p>
     </span><span class="s2">"opened_at"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"viewed_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="s2">"2019-12-09T23:59:59.999Z"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="kc">false</span><span class="w">
+    </span><span class="s2">"test_mode"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.trucentive.com/gifts/env-abc123/"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"redemption_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/redeem/abc123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"redemption_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
@@ -932,7 +935,6 @@ Webhooks are configured at the account level. Contact your TruCentive representa
       </span><span class="s2">"custom_color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"periwinkle"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"redemption_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/redeem/abc123"</span><span class="w">
-    </span><span class="s2">"redemption_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -1015,10 +1017,6 @@ Webhooks are configured at the account level. Contact your TruCentive representa
 <tr>
 <td>redemption_url</td>
 <td>External redemption URL (only included for opened envelopes when the webhook has redemption_url enabled and the selected incentive has an external URL)</td>
-</tr>
-<tr>
-<td>redemption_code</td>
-<td>External redemption code (only included for opened envelopes when the webhook has redemption_url enabled and the selected incentive has an external pin-type token)</td>
 </tr>
 </tbody></table>
 <h2 id='verifying-webhook-signatures'>Verifying Webhook Signatures</h2>
