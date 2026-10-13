@@ -46,6 +46,21 @@ You must replace <code>API_KEY</code> with your personal API key.
 </aside>
 
 
+# Rate Limits
+
+The TruCentive API enforces the following rate limits:
+
+Limit | Endpoint | Window
+----- | -------- | ------
+300 requests | All `/api/v1/` endpoints | Per minute
+100 requests | `POST /api/v1/envelopes/:id/deliver` | Per minute
+
+When a limit is exceeded the API returns **429 Too Many Requests**. Retry after the current minute window resets.
+
+<aside class="notice">
+Rate limits are applied per API token. If you need higher limits for your use case, contact <a href="mailto:support@trucentive.com">support@trucentive.com</a>.
+</aside>
+
 # Account
 
 ## Get Account Information
