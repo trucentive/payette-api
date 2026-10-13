@@ -22,6 +22,6 @@ Error Code | Meaning
 403 | Access Denied -- Your API key is wrong or your OAuth account is not authorized.
 404 | Not Found -- The specified API or resource could not be found.
 406 | Not Acceptable -- You requested a format that isn't valid.
-429 | Too Many Requests -- You've submitted too many API requests in too short a time, try again later.
+429 | Too Many Requests -- You've exceeded the rate limit. See [Rate Limits](#rate-limits) for details. Retry after the current minute window resets.
 500 | Internal Server Error -- We had a problem processing your request, please try again later or contact support.
 503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.
